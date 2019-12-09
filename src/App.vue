@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <section class="modal-btns">
-      <button class="modal-btns__btn" @click="simpleModal.isOpen = true">Open model window</button>
-      <button class="modal-btns__btn" @click="formModal.isOpen = true">Open model window</button>
+      <button class="modal-btns__btn" @click="simpleModal.isOpen = true">Open simpleModal window</button>
+      <button class="modal-btns__btn" @click="formModal.isOpen = true">Open formModal window</button>
+			<button class="modal-btns__btn" @click="validModal.isOpen = true">Open validModal window</button>
     </section>
     <transition name="modal">
       <Modal v-if="simpleModal.isOpen" @close="simpleModal.isOpen = false" title="New Modal">
@@ -29,15 +30,20 @@
         </form>
       </Modal>
     </transition>
+		<transition name="modal">
+			<ModalValid v-if="validModal.isOpen" @close="modalClose(validModal)"></ModalValid>
+		</transition>
   </div>
 </template>
 
 <script>
 import Modal from "./components/Modal.vue";
+import ModalValid from "./components/ModalValid.vue";
 export default {
   name: "app",
   components: {
-    Modal
+		Modal,
+		ModalValid
   },
   data() {
     return {
@@ -48,7 +54,10 @@ export default {
         isOpen: false,
 				name: "",
 				email: ""
-      }
+			},
+			validModal: {
+				isOpen: false,
+			}
     };
   },
   methods: {
